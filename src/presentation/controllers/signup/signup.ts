@@ -5,7 +5,7 @@ import {
   Controller,
   AddAccount,
 } from "./signup-protocols";
-import { badRequest, serverError } from "../../helpers/http-helper";
+import { badRequest, serverError, ok } from "../../helpers/http-helper";
 import { InvalidParamError, MissingParamError } from "../../errors";
 
 export class SignUpController implements Controller {
@@ -43,10 +43,7 @@ export class SignUpController implements Controller {
         email,
         password,
       });
-      return {
-        body: account,
-        statusCode: 200,
-      };
+      return ok(account);
     } catch (err) {
       return serverError();
     }
