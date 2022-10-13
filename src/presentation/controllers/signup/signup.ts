@@ -10,7 +10,7 @@ import { InvalidParamError, MissingParamError } from "../../errors";
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator;
-  addAccount: AddAccount;
+  private readonly addAccount: AddAccount;
 
   constructor(emailValidator: EmailValidator, addAccount: AddAccount) {
     this.emailValidator = emailValidator;
