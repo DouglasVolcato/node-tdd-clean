@@ -202,17 +202,9 @@ describe("SignUp Controller", () => {
     expect(httResponse).toEqual(serverError(new ServerError()));
   });
 
-  test("Should return 200 valid data is provided", async () => {
+  test("Should return 200 if valid data is provided", async () => {
     const { sut } = makeSut();
-    const httpRequest = {
-      body: {
-        name: "valid_name",
-        email: "valid_email@email.com",
-        password: "valid_password",
-        passwordConfirmation: "valid_password",
-      },
-    };
-    const httResponse = await sut.handle(httpRequest);
+    const httResponse = await sut.handle(makeFakeRequest());
     expect(httResponse).toEqual(ok(makeFakeAccount()));
   });
 
@@ -222,5 +214,14 @@ describe("SignUp Controller", () => {
     const httpRequest = makeFakeRequest();
     await sut.handle(httpRequest);
     expect(validateSpy).toHaveBeenCalledWith(httpRequest.body);
+  });
+
+  test("Should return 400 if Validation returns an error", async () => {
+    const { sut, validationStub } = makeSut();
+    jest
+      .spyOn(validationStub, "validate")
+      .mockReturnValueOnce(new MissingParamError("any_field"));
+    const httResponse = await sut.handle(makeFakeRequest());
+    expect(httResponse).toEqual(badRequest(new MissingParamError("any_field")));
   });
 });
