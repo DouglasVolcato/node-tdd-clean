@@ -41,7 +41,7 @@ export class LoginController implements Controller {
           resolve(badRequest(new InvalidParamError("email")))
         );
       }
-      this.authentication.auth(email, password);
+      await this.authentication.auth(email, password);
     } catch (err) {
       return serverError(err);
     }
