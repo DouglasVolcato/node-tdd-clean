@@ -1,16 +1,20 @@
 import { MissingParamError } from "../../../presentation/errors";
 import { RequiredFieldsValidation } from "./required-field-validation";
 
+const makeSut = () => {
+  return new RequiredFieldsValidation("email");
+};
+
 describe("RequiredFieldsValidation", () => {
   test("Should return a MissingParamError if validation fails", () => {
-    const sut = new RequiredFieldsValidation("field");
-    const error = sut.validate({ email: "any_email@email.com" });
+    const sut = makeSut();
+    const error = sut.validate({ name: "Douglas" });
     console.log(error);
-    expect(error).toEqual(new MissingParamError("field"));
+    expect(error).toEqual(new MissingParamError("email"));
   });
 
   test("Should not return if validation succeeds", () => {
-    const sut = new RequiredFieldsValidation("email");
+    const sut = makeSut();
     const error = sut.validate({ email: "any_email@email.com" });
     expect(error).toBeFalsy();
   });
