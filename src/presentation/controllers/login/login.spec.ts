@@ -8,11 +8,8 @@ import {
   serverError,
   unauthorized,
   ok,
-} from "../../../presentation/helpers/http-helper";
-import {
-  HttpRequest,
-  Validation,
-} from "../signup/signup-protocols";
+} from "../../helpers/http/http-helper";
+import { HttpRequest, Validation } from "../signup/signup-protocols";
 import { LoginController } from "./login";
 
 const makeValidation = (): Validation => {
@@ -45,12 +42,12 @@ const makeFakeRequest = (): HttpRequest => {
 interface SutTypes {
   sut: LoginController;
   authenticationStub: Authentication;
-  validationStub: Validation
+  validationStub: Validation;
 }
 
 const makeSut = (): SutTypes => {
   const authenticationStub = makeAuthentication();
-  const validationStub = makeValidation()
+  const validationStub = makeValidation();
   const sut = new LoginController(authenticationStub, validationStub);
   return { sut, authenticationStub, validationStub };
 };

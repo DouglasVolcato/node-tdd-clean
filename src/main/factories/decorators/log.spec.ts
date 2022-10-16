@@ -1,5 +1,8 @@
 import { LogErrorRepository } from "@/data/protocols/logErrorRepository";
-import { serverError, ok } from "../../../presentation/helpers/http-helper";
+import {
+  serverError,
+  ok,
+} from "../../../presentation/helpers/http/http-helper";
 import {
   Controller,
   HttpRequest,
