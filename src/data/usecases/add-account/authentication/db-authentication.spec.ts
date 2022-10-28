@@ -72,6 +72,15 @@ describe("DbAuthentication UseCase", () => {
     await expect(promise).rejects.toThrow();
   });
 
+  test("Should return null if LoadAccountByEmailRepository returns null", async () => {
+    const { sut, loadAccountByEmailRepositoryStub } = makeSut();
+    jest
+      .spyOn(loadAccountByEmailRepositoryStub, "load")
+      .mockReturnValueOnce(null);
+    const accessToken = await sut.auth(makeFakeAuthentication());
+    expect(accessToken).toBeNull();
+  });
+
   test("Should call HashComparer with correct values", async () => {
     const { sut, hashComparerStub } = makeSut();
     const compareSpy = jest.spyOn(hashComparerStub, "compare");
@@ -88,5 +97,14 @@ describe("DbAuthentication UseCase", () => {
       );
     const promise = sut.auth(makeFakeAuthentication());
     await expect(promise).rejects.toThrow();
+  });
+
+  test("Should return null if HashComparer returns false", async () => {
+    const { sut, hashComparerStub } = makeSut();
+    const compareSpy = jest
+      .spyOn(hashComparerStub, "compare")
+      .mockReturnValueOnce(new Promise((resolve) => resolve(false)));
+    const accessToken = await sut.auth(makeFakeAuthentication());
+    expect(accessToken).toBeNull();
   });
 });
