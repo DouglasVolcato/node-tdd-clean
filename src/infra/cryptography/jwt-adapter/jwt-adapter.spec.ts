@@ -7,7 +7,7 @@ jest.mock("jsonwebtoken", () => ({
   },
 }));
 
-const makeSut = () => {
+const makeSut = (): JwtAdapter => {
   return new JwtAdapter("secret");
 };
 
