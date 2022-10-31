@@ -1,4 +1,4 @@
-import { AddAccountRepository } from "@/data/protocols/db/addAccountRepository";
+import { AddAccountRepository } from "@/data/protocols/db/account/add-account-repository";
 import { DbAddAccount } from "./db-add-account";
 import {
   AccountModel,
