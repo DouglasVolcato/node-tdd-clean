@@ -50,5 +50,15 @@ describe("Login routes", () => {
         })
         .expect(200);
     });
+
+    test("Should return 401 with invalid credentials", async () => {
+      await request(app)
+        .post("/api/login")
+        .send({
+          email: "douglasvolato@gmail.com",
+          password: "password123",
+        })
+        .expect(401);
+    });
   });
 });
